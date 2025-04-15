@@ -75,7 +75,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: Text(
-                  'Silahkan Masukkan Email Anda',
+                  'Silahkan Masukkan Email Anda \nadmin@gmail.com',
                   style: TextStyle(fontSize: 16, color: Colors.black87),
                 ),
               ),
