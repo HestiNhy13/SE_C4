@@ -15,6 +15,8 @@ class _OtpScreenState extends State<OtpScreen> {
 //list controller untuk 4 input
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
   final List<CustomTextController> _controllers = List.generate(4, (_) => CustomTextController());
+  
+  
 
   @override
   void dispose() {
@@ -35,7 +37,7 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppBar(automaticallyImplyLeading: true, title: Text("Check your email")),
+          AppBar(automaticallyImplyLeading: true, title: Text("Periksa email Anda")),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -44,12 +46,12 @@ class _OtpScreenState extends State<OtpScreen> {
             Text("Kami telah mengirimkan kode OTP ke email Anda",
                 style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 4),
-            Text("michelia****@gmail.com",
+            Text("admin*****@gmail.com",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(4, (index) {
+              children: List.generate(5, (index) {
                 return SizedBox(
                   width: 60,
                   child: CustomTextField(
@@ -71,10 +73,11 @@ class _OtpScreenState extends State<OtpScreen> {
               }),
             ),
             SizedBox(height: 24),
-            CustomButton(
+            Center( 
+            child:CustomButton(
               text: "Verifikasi Kode",
               onPressed: _verifyCode, borderColor: Colors.black,
-            ),
+            ),),
             SizedBox(height: 16),
             Center(
               child: TextButton(
