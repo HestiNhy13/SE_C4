@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sport_ease/presentation/screen/profil_screen.dart';
 import 'package:sport_ease/presentation/screen/reset_password_screen.dart';
+import 'package:sport_ease/presentation/screen/riwayat_screen.dart';
 import '../screen/splash_screen.dart';
 import '../screen/opening_screen.dart';
 import '../screen/login_screen.dart';
@@ -12,6 +14,10 @@ class AppRoute{
   static const String login = '/login';
   static const String register = '/register';
   static const String resetpassword = '/reset';
+  static const String beranda = '/beranda';
+  static const String daftar = '/pendaftaran';
+  static const String riwayat = '/riwayat';
+  static const String profile = '/profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch (settings.name){
@@ -25,6 +31,12 @@ class AppRoute{
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case resetpassword:
         return MaterialPageRoute(builder: (_) => ResetPassword());
+      case beranda:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
+      case riwayat:
+        return MaterialPageRoute(builder: (_) => RiwayatScreen());
+      case profile:
+        return MaterialPageRoute(builder: (_) => ProfilePage());
       default:
         return MaterialPageRoute(builder: (_) => Scaffold(
           body: Center(child: Text('Halaman tidak ditemukan.'),),

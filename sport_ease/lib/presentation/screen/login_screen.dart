@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_ease/presentation/screen/home_screen.dart';
 import 'package:sport_ease/presentation/screen/reset_password_screen.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text.dart';
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderColor: Colors.black,
                         color: Colors.blue.shade900,
                         onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                         },
                       ),
                     ),
