@@ -1,25 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screen/detail_olahraga_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-/// Root widget aplikasi
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pendaftaran',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const PendaftaranScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 /// Screen / Halaman Pendaftaran
 class PendaftaranScreen extends StatefulWidget {
   const PendaftaranScreen({super.key});
@@ -29,21 +10,20 @@ class PendaftaranScreen extends StatefulWidget {
 }
 
 class _PendaftaranScreenState extends State<PendaftaranScreen> {
-  // Contoh data daftar kelas/olahraga
   final List<_Olahraga> _listOlahraga = [
     _Olahraga(
       hariJam: "Senin, 15.00 - 17.00 WIB",
       nama: "Bulu Tangkis",
       pelatih: "Bapak Sugiyo",
       lokasi: "Gor Bung Karno Kab.Nganjuk",
-      imageUrl: "https://picsum.photos/seed/bulutangkis/200/120", // Contoh
+      imageUrl: "assets/image/batminton/batminton2.jpeg",
     ),
     _Olahraga(
       hariJam: "Rabu, 16.00 - 18.00 WIB",
       nama: "Futsal",
       pelatih: "Bapak Sugeng",
       lokasi: "Gor Bung Karno Kab.Nganjuk",
-      imageUrl: "https://picsum.photos/seed/futsal/200/120",
+      imageUrl: "assets/image/futsal/futsal2.jpeg",
     ),
     _Olahraga(
       hariJam: "Kamis, 16.00 - 18.00 WIB",
@@ -66,7 +46,6 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
       lokasi: "Gedung Juang 45 Kab.Nganjuk",
       imageUrl: "https://picsum.photos/seed/taekwondo/200/120",
     ),
-    // Tambahkan item lain sesuai kebutuhan
   ];
 
   final TextEditingController _searchController = TextEditingController();
@@ -79,53 +58,40 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
   }
 
   void _filterList(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        _displayList = _listOlahraga;
-      });
-    } else {
-      setState(() {
-        _displayList = _listOlahraga.where((olahraga) {
-          final namaLower = olahraga.nama.toLowerCase();
-          final pelatihLower = olahraga.pelatih.toLowerCase();
-          final queryLower = query.toLowerCase();
-          return namaLower.contains(queryLower) ||
-              pelatihLower.contains(queryLower);
-        }).toList();
-      });
-    }
+    setState(() {
+      _displayList = query.isEmpty
+          ? _listOlahraga
+          : _listOlahraga.where((olahraga) {
+              final q = query.toLowerCase();
+              return olahraga.nama.toLowerCase().contains(q) ||
+                  olahraga.pelatih.toLowerCase().contains(q);
+            }).toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /// AppBar dengan ikon back di kiri dan judul di tengah
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Aksi kembali, misalnya:
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text("Pendaftaran"),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // Search bar
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              onChanged: (value) => _filterList(value),
+              onChanged: _filterList,
               decoration: InputDecoration(
                 hintText: "Pencarian...",
                 prefixIcon: const Icon(Icons.search),
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 12,
-                ),
+                    vertical: 0, horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.grey),
@@ -133,8 +99,6 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
               ),
             ),
           ),
-
-          // Expanded agar ListView memenuhi sisa ruang
           Expanded(
             child: ListView.builder(
               itemCount: _displayList.length,
@@ -157,7 +121,6 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
-        // Gambar di sisi kiri
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.network(
@@ -167,7 +130,6 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        // Judul + subjudul
         title: Text(
           item.hariJam,
           style: const TextStyle(
@@ -188,8 +150,6 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
           ],
         ),
         onTap: () {
-          // Aksi saat item ditekan, misalnya buka detail
-          //ketika diklik pindah ke detailolahraga.dart
           Navigator.push(
             context,
             MaterialPageRoute(
