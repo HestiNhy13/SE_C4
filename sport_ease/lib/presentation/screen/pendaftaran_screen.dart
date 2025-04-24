@@ -16,7 +16,7 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
       nama: "Bulu Tangkis",
       pelatih: "Bapak Sugiyo",
       lokasi: "Gor Bung Karno Kab.Nganjuk",
-      imageUrl: "assets/image/batminton/batminton2.jpeg",
+      imageUrl: "assets/image/badminton/badminton2.jpeg",
     ),
     _Olahraga(
       hariJam: "Rabu, 16.00 - 18.00 WIB",
@@ -30,14 +30,14 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
       nama: "Voli",
       pelatih: "Bapak Jiman",
       lokasi: "Gedung Juang 45 Kab.Nganjuk",
-      imageUrl: "https://picsum.photos/seed/voli/200/120",
+      imageUrl: "assets/image/voly/voly1.png",
     ),
     _Olahraga(
       hariJam: "Minggu, 08.00 - 10.00 WIB",
       nama: "Karate",
       pelatih: "Bapak Andik",
       lokasi: "Gor Bung Karno Kab.Nganjuk",
-      imageUrl: "https://picsum.photos/seed/karate/200/120",
+      imageUrl: "assets/image/karate/karate1.jpeg",
     ),
     _Olahraga(
       hariJam: "Jum'at, 15.00 - 17.00 WIB",

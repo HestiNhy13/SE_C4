@@ -19,6 +19,7 @@ class AppRoute{
   static const String riwayat = '/riwayat';
   static const String profile = '/profile';
 
+
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch (settings.name){
       case splash:

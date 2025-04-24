@@ -49,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      _showExitDialog(context);
+                    },
                     child: const Icon(Icons.arrow_back_ios, size: 24),
                   ),
                   const Spacer(),
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 16),
                 children: [
                   _buildTrendingCard(
-                    imageUrl: "assets/image/batminton/batminton1.jpeg",
+                    imageUrl: "assets/image/badminton/batminton1.jpeg",
                     title: "Final Badminton SMA 1 Rejos...",
                     date: "30 Mei 2025",
                     price: "IDR50.000/org",
@@ -147,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   _buildUpcomingCard(
-                    imageUrl: "assets/image/futsal1.jpeg",
+                    imageUrl: "assets/image/futsal/futsal1.jpeg",
                     title: "Futsal : Final SMAN 1 Tanjunganom",
                     location: "Gedung Juang 45 Nganjuk",
                     date: "Jul 12, 2025",
@@ -155,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 12),
                   _buildUpcomingCard(
-                    imageUrl: "assets/image/voly1.png",
+                    imageUrl: "assets/image/voly/voly1.png",
                     title: "Voly: Piala Bupati Nganjuk 20...",
                     location: "Gedung Juang 45 Nganjuk",
                     date: "Jul 22, 2025",
@@ -320,6 +322,41 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  // Menampilkan dialog konfirmasi keluar dengan custom button
+  void _showExitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Menghindari penutupan dialog dengan klik di luar
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Konfirmasi Keluar"),
+          content: const Text("Apakah Anda yakin ingin keluar?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Menutup dialog
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red, textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              child: const Text("Batal"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Menutup dialog
+                Navigator.pushReplacementNamed(context, '/login'); // Navigasi ke login page
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.blue, textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              child: const Text("Oke"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

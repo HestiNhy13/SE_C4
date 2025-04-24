@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sport_ease/presentation/screen/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:sport_ease/presentation/screen/reset_password_screen.dart';
+import 'package:sport_ease/presentation/screen/register_screen.dart';
+import '../../services/auth_service.dart';
+import '../../models/user_model.dart';
+import 'package:sport_ease/providers/user_provider.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text.dart';
 import '../widget/custom_card.dart';
-import '../widget/custom_text.dart'; // Import file CustomTextField
-import '../screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,68 +17,87 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-//Digunakan untuk mengambil isi dari TextField
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool _isPasswordVisible = false; // Untuk mengontrol visibilitas password
+  bool _isPasswordVisible = false;
+
+  Future<void> handleLogin() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    String? result = await AuthService().loginUser(email: email, password: password);
+
+    if (result == null) {
+      try {
+        final uid = FirebaseAuth.instance.currentUser!.uid;
+
+        final snapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+        if (snapshot.exists) {
+          final userData = snapshot.data()!;
+          final user = UserModel.fromMap(userData);
+
+          // Simpan ke provider
+          context.read<UserProvider>().setUser(user);
+
+          // Navigasi ke halaman beranda
+          Navigator.pushReplacementNamed(context, '/beranda');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Data pengguna tidak ditemukan di Firestore.')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Terjadi kesalahan: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result)),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Ubah background Scaffold jadi putih
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10),
-            Center(
-              child: Image.asset('assets/image/logo1.png', width: 300),
-            ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+            Center(child: Image.asset('assets/image/logo1.png', width: 300)),
+            const SizedBox(height: 10),
             CustomCard(
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'SELAMAT DATANG',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Masuk untuk melanjutkan',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      'Email',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                    SizedBox(height: 10),
+                    const Text('SELAMAT DATANG', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    const Text('Masuk untuk melanjutkan', style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 15),
+                    const Text('Email', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
                     CustomTextField(
                       hintText: 'Masukkan Email',
-                      textColor: Colors.black,
                       controller: emailController,
                       borderColor: Colors.black87,
                       fillColor: Colors.white60,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Password',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+                    const Text('Password', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
                     CustomTextField(
                       hintText: 'Masukkan Password',
-                      textColor: Colors.black,
+                      controller: passwordController,
+                      obscureText: !_isPasswordVisible,
                       borderColor: Colors.black87,
                       fillColor: Colors.white60,
-                      controller: passwordController,
-                      obscureText: !_isPasswordVisible, // Toggle visibilitas password
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        ),
+                        icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
                             _isPasswordVisible = !_isPasswordVisible;
@@ -82,40 +105,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(context, 
-                          MaterialPageRoute(builder: (context) => ResetPassword()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPassword()));
                         },
-                        child: Text(
-                          'Lupa Kata Sandi?',
-                          style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),
-                        ),
+                        child: const Text('Lupa Kata Sandi?', style: TextStyle(color: Colors.black, decoration: TextDecoration.underline)),
                       ),
                     ),
-                    //button masuk
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Center(
                       child: CustomButton(
                         text: 'Masuk',
                         borderColor: Colors.black,
                         color: Colors.blue.shade900,
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                        },
+                        onPressed: handleLogin,
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Center(
-                      child: Text(
-                        'atau',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                      ),
-                    ),
-                    SizedBox(height: 15),
+                    const Center(child: Text('atau', style: TextStyle(fontSize: 16))),
+                    const SizedBox(height: 15),
                     Center(
                       child: CustomButton(
                         text: 'Daftar',
@@ -123,10 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textColor: Colors.black,
                         borderColor: Colors.black,
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => RegisterScreen()),
-                          );
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
                         },
                       ),
                     ),
@@ -134,7 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
