@@ -1,22 +1,13 @@
+import 'package:provider/provider.dart';
+import 'package:sport_ease/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
-    );
-  }
-}
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
@@ -31,8 +22,7 @@ class ProfilePage extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/sunset.jpg'), // Replace with your background image
+                    image: AssetImage('assets/sunset.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -42,12 +32,11 @@ class ProfilePage extends StatelessWidget {
                 left: 20,
                 child: GestureDetector(
                   onTap: () {
-                    // Implement edit profile picture functionality
+                    // TODO: Implement edit profile picture
                   },
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage(
-                        'assets/profile.jpg'), // Replace with user's profile image
+                    backgroundImage: AssetImage('assets/profile.jpg'),
                   ),
                 ),
               ),
@@ -56,11 +45,11 @@ class ProfilePage extends StatelessWidget {
           SizedBox(height: 20),
           // User Name
           Text(
-            'Michalia Campaka',
+            user?.namaLengkap ?? 'Nama tidak tersedia',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
-          // Event details
+          // Card info
           Card(
             margin: EdgeInsets.all(16),
             child: Padding(
