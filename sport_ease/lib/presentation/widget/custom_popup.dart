@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
-import '../widget/custom_button.dart'; // Pastikan path sesuai
-import '../widget/custom_card.dart';  // Pastikan path sesuai
+import '../widget/custom_button.dart';
+import '../widget/custom_card.dart';
 
 class CustomPopup extends StatelessWidget {
   final String message;
   final VoidCallback onPressed;
-  final Color backgroundColor;
+  final List<Color>? backgroundColor;
   final String buttonText;
 
   const CustomPopup({
-    super.key,
+    Key? key,
     required this.message,
     required this.onPressed,
-    required this.backgroundColor,
+    this.backgroundColor,
     this.buttonText = "Oke",
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: CustomCard(
+        // gradientColors: gradientColors,
+        // backgroundColor: Colors.blue,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -28,7 +30,11 @@ class CustomPopup extends StatelessWidget {
             children: [
               Text(
                 message,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87, // lebih gelap agar terbaca
+                  fontWeight: FontWeight.w500,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -38,7 +44,7 @@ class CustomPopup extends StatelessWidget {
                   Navigator.of(context).pop();
                   onPressed();
                 },
-              )
+              ),
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screen/reset_password_screen.dart';
+import 'reset_password_screen.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text.dart';
 import '../widget/custom_textcontroller.dart';

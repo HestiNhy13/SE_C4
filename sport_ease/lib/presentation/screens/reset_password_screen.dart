@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sport_ease/presentation/screen/otp_screen.dart';
+import 'package:sport_ease/presentation/screens/otp_screen.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text.dart';
 import '../widget/custom_textcontroller.dart';
-import '../screen/login_screen.dart';
+import 'login_screen.dart';
 
 class ResetPassword extends StatefulWidget {
   @override

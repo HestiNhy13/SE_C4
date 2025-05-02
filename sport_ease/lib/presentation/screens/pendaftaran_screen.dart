@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screen/detail_olahraga_screen.dart';
+import 'package:sport_ease/presentation/screens/home_screen.dart';
+import 'detail_olahraga_screen.dart';
 
 /// Screen / Halaman Pendaftaran
 class PendaftaranScreen extends StatefulWidget {
@@ -75,9 +76,10 @@ class _PendaftaranScreenState extends State<PendaftaranScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen())),
         ),
         title: const Text("Pendaftaran"),
+        backgroundColor: Color(0xFF166BAA),
         centerTitle: true,
       ),
       body: Column(

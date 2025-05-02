@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screen/daftar1_screen.dart';
+import 'daftar1_screen.dart';
 
 /// Kelas [DetailOlahragaScreen] menampilkan detail "olahraga" / pendaftaran.
 /// Menerima data secara terpisah (hariJam, nama, pelatih, lokasi, imageUrl).

@@ -3,38 +3,42 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   final Widget child;
   final double elevation;
+  final List<Color>? gradientColors;
 
   const CustomCard({
     Key? key,
     required this.child,
-    this.elevation = 4.0,
+    this.elevation = 6.0,
+    this.gradientColors, 
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: elevation,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
-        bottomLeft: Radius.circular(8),
-        bottomRight: Radius.circular(8),
-      ),
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue.shade100, Colors.blue.shade500],
+            colors: gradientColors ??
+                [
+                  Color(0xFF89F7FE), // biru muda ke turquoise
+                  Color(0xFF66A6FF),
+                ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: child,
       ),
     );

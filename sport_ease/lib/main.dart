@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Tambahkan ini
 import 'package:sport_ease/core/firebase/firebase_options.dart';
 import 'package:sport_ease/presentation/routes/app_route.dart';
+import 'package:sport_ease/providers/daftar_provider.dart';
 import 'package:sport_ease/providers/user_provider.dart'; // Pastikan path-nya sesuai
 
 void main() async {
@@ -14,6 +15,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => DaftarProvider()),
         // Tambahkan provider lain di sini jika ada
       ],
       child: const MyApp(),
