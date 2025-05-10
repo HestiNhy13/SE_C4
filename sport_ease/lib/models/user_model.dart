@@ -2,6 +2,8 @@ class UserModel {
   final String uid;
   final String email;
 
+  var name;
+
   UserModel({required this.uid, required this.email});
 
   Map<String, dynamic> toMap() {
